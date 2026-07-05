@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>BossRush</title>
+  <script type="module" crossorigin src="/assets/index-C0EUgala.js"></script>
+  <link rel="stylesheet" crossorigin href="/assets/index-BvBJhYnU.css">
+</head>
+<body>
+  <!-- ═══ 开始界面 ═══ -->
+  <div id="start-screen">
+    <div id="start-box">
+      <h1>BOSS RUSH</h1>
+
+      <!-- 难度选择 -->
+      <div id="difficulty-select">
+        <button class="diff-btn selected" data-diff="easy">Easy</button>
+        <button class="diff-btn" data-diff="normal">Normal</button>
+        <button class="diff-btn" data-diff="hard">Hard</button>
+      </div>
+
+      <!-- 选歌栏 -->
+      <div id="song-select-wrap">
+        <select id="song-select" aria-label="Select song"></select>
+        <p id="song-info"></p>
+      </div>
+
+      <!-- 谱面选择 -->
+      <div id="chart-select-wrap">
+        <select id="chart-select" aria-label="Chart select" style="padding:6px 12px;font-size:14px;font-family:inherit;color:#00ffff;background:rgba(0,20,30,0.9);border:1px solid rgba(0,255,255,0.3);border-radius:3px;margin-bottom:12px;">
+          <option value="auto">Auto Generated</option>
+        </select>
+      </div>
+
+      <div id="home-buttons">
+        <button id="start-button">START</button>
+        <button id="home-editor-btn" class="menu-btn secondary" style="margin-top:8px;">Custom Chart</button>
+        <button id="home-calibrate-btn" class="menu-btn secondary" style="margin-top:4px;">Calibration</button>
+      </div>
+      <p id="offset-hint">If timing feels off, use <kbd>[</kbd> <kbd>]</kbd> to adjust offset</p>
+    </div>
+  </div>
+
+  <!-- ═══ 结算界面 ═══ -->
+  <div id="result-screen">
+    <div id="result-box">
+      <h1 id="result-rank">-</h1>
+      <div class="result-row"><span class="r-label">Score</span><span id="r-score">0</span></div>
+      <div class="result-row"><span class="r-label">Max Combo</span><span id="r-maxcombo">0</span></div>
+      <div class="result-row"><span class="r-label">Perfect</span><span id="r-perfect">0</span></div>
+      <div class="result-row"><span class="r-label">Good</span><span id="r-good">0</span></div>
+      <div class="result-row"><span class="r-label">Miss</span><span id="r-miss">0</span></div>
+      <div class="result-row"><span class="r-label">Accuracy</span><span id="r-accuracy">0%</span></div>
+      <button id="restart-button">RESTART</button>
+    </div>
+  </div>
+
+  <!-- ═══ 暂停菜单 ═══ -->
+  <div id="pause-menu" class="menu-panel">
+    <h2>PAUSED</h2>
+    <button id="pause-resume-btn"   class="menu-btn">Resume</button>
+    <button id="pause-restart-btn"  class="menu-btn">Restart</button>
+    <button id="pause-calibrate-btn" class="menu-btn">Calibration</button>
+    <button id="pause-home-btn"     class="menu-btn secondary">Home</button>
+  </div>
+
+  <!-- ═══ 校准菜单 ═══ -->
+  <div id="calibration-menu" class="menu-panel">
+    <h2>CALIBRATION</h2>
+    <p>Match the beat: shoot when the approach ring touches the target.<br>If you consistently hit early, increase offset (+).<br>If late, decrease (-).</p>
+    <div id="calib-value">Current Offset: <span id="calib-offset-display">0ms</span></div>
+    <div class="calib-btns">
+      <button id="calib-minus-20" class="menu-btn">-20ms</button>
+      <button id="calib-minus-5"  class="menu-btn secondary">-5ms</button>
+      <button id="calib-plus-5"   class="menu-btn secondary">+5ms</button>
+      <button id="calib-plus-20"  class="menu-btn">+20ms</button>
+    </div>
+    <p class="calib-hint">Fine-tune with <kbd>[</kbd> <kbd>]</kbd> keys (±10ms) during gameplay.</p>
+
+    <!-- 节拍器校准 -->
+    <div class="calib-section">
+      <p class="calib-hint">Metronome: listen for 4 clicks, tap on the 4th.</p>
+      <button id="calib-metro-start" class="menu-btn secondary" style="min-width:auto;padding:6px 20px;">▶ Start Metronome</button>
+      <span id="calib-metro-status" class="calib-hint"></span>
+    </div>
+
+    <button id="calib-reset-btn" class="menu-btn">Reset to 0</button>
+    <button id="calib-back-btn"  class="menu-btn secondary">Back</button>
+  </div>
+
+  <!-- ═══ 自定义关卡编辑器 ═══ -->
+  <div id="editor-screen" class="menu-panel">
+    <h2>CHART EDITOR</h2>
+    <p>Load a song, play it, and click to the beat — your clicks become targets.</p>
+
+    <!-- 歌曲选择 -->
+    <div id="editor-song-wrap">
+      <select id="editor-song-select" aria-label="Editor song select"></select>
+    </div>
+    <div id="editor-song-detail" class="editor-detail"></div>
+
+    <!-- BPM / Offset -->
+    <div class="editor-row">
+      <label>BPM <input id="editor-bpm" type="number" value="120" min="60" max="300" step="1"></label>
+      <label>Offset <input id="editor-offset" type="number" value="0" step="0.001"></label>
+    </div>
+
+    <!-- 播放控制 -->
+    <div class="editor-playback">
+      <button id="editor-load-btn"   class="menu-btn">Load Song</button>
+      <button id="editor-play-btn"   class="menu-btn" disabled>▶ Play</button>
+      <button id="editor-pause-btn"  class="menu-btn" disabled>⏸ Pause</button>
+      <button id="editor-stop-btn-pb" class="menu-btn" disabled>⏹ Stop</button>
+    </div>
+    <div id="editor-time-display" class="editor-time">--:-- / --:--</div>
+
+    <!-- Mode 切换 + 小节范围（Mode A） -->
+    <div class="editor-row" style="gap:10px;">
+      <button id="editor-mode-a" class="menu-btn" style="min-width:auto;padding:4px 14px;font-size:13px;">Mode A: Beat Grid</button>
+      <button id="editor-mode-b" class="menu-btn secondary" style="min-width:auto;padding:4px 14px;font-size:13px;">Mode B: Free</button>
+      <span style="color:rgba(0,255,255,0.4);font-size:12px;" id="editor-mode-label">Mode A active</span>
+    </div>
+    <div id="editor-modea-opts" class="editor-row" style="gap:8px;">
+      <label style="color:rgba(0,255,255,0.5);font-size:12px;">Measures: <input id="editor-ma-start" type="number" value="1" min="1" style="width:50px;"></label>
+      <label style="color:rgba(0,255,255,0.5);font-size:12px;">to <input id="editor-ma-end" type="number" value="4" min="1" style="width:50px;"></label>
+      <span id="editor-ma-range-time" style="color:rgba(0,255,255,0.3);font-size:11px;"></span>
+    </div>
+
+    <!-- 录制控制 -->
+    <div class="editor-section">
+      <button id="editor-rec-start-btn" class="menu-btn" disabled>● Start Recording</button>
+      <button id="editor-rec-stop-btn"  class="menu-btn" style="display:none;">■ Stop &amp; Save</button>
+    </div>
+
+    <!-- 录制编辑 -->
+    <div id="editor-rec-edit" class="editor-section" style="display:none;">
+      <span id="editor-rec-count">0 targets</span>
+      <button id="editor-undo-btn"  class="menu-btn secondary" style="min-width:auto;padding:6px 16px;font-size:14px;">↩ Undo</button>
+      <button id="editor-clear-btn" class="menu-btn secondary" style="min-width:auto;padding:6px 16px;font-size:14px;">✕ Clear</button>
+    </div>
+    <div id="editor-status" class="editor-status"></div>
+
+    <!-- 时间轴 -->
+    <canvas id="editor-timeline" width="640" height="60" style="background:rgba(0,20,30,0.9);border:1px solid rgba(0,255,255,0.2);border-radius:4px;cursor:pointer;max-width:100%;"></canvas>
+    <div class="editor-row" style="gap:8px;">
+      <button id="editor-tl-normal" class="menu-btn secondary" style="min-width:auto;padding:4px 12px;font-size:13px;">Normal</button>
+      <button id="editor-tl-downbeat" class="menu-btn secondary" style="min-width:auto;padding:4px 12px;font-size:13px;">Downbeat</button>
+      <span id="editor-tl-type" style="color:rgba(0,255,255,0.5);font-size:13px;">← pick type, click timeline</span>
+    </div>
+
+    <!-- 保存 / 载入 -->
+    <div class="editor-row" style="gap:8px;">
+      <input id="editor-chart-name" type="text" placeholder="Chart name..." style="padding:4px 8px;font-size:13px;font-family:inherit;color:#00ffff;background:rgba(0,20,30,0.9);border:1px solid rgba(0,255,255,0.3);border-radius:3px;width:160px;">
+      <button id="editor-save-btn" class="menu-btn secondary" style="min-width:auto;padding:6px 14px;font-size:13px;">💾 Save</button>
+      <button id="editor-load-list-btn" class="menu-btn secondary" style="min-width:auto;padding:6px 14px;font-size:13px;">📂 Load</button>
+    </div>
+    <select id="editor-load-select" style="display:none;padding:4px 8px;font-size:13px;font-family:inherit;color:#00ffff;background:rgba(0,20,30,0.9);border:1px solid rgba(0,255,255,0.3);border-radius:3px;"></select>
+
+    <!-- 导出 -->
+    <button id="editor-export-btn" class="menu-btn" style="display:none;">⬇ Export Chart JSON</button>
+    <button id="editor-test-btn"   class="menu-btn" style="display:none;">▶ Test This Chart</button>
+
+    <button id="editor-back-btn" class="menu-btn secondary">Back to Home</button>
+  </div>
+
+
+  <!-- ═══ 恢复遮罩（保留兼容）═══ -->
+  <div id="resume-overlay">
+    <span>Click To Resume</span>
+  </div>
+
+  <!-- ═══ 游戏画面 ═══ -->
+  <div id="game-container">
+    <!-- 节拍环 — 准星外围，随节拍收缩 -->
+    <div id="beat-ring"></div>
+
+    <!-- 准星 — 屏幕正中心 -->
+    <div id="crosshair">+</div>
+
+    <!-- 判定文字 — 准星上方 -->
+    <div id="judgment-display"></div>
+
+    <!-- 右上角 HUD -->
+    <div id="score-display">Score: 0</div>
+    <div id="combo-display"></div>
+
+    <!-- 激光热量条 -->
+    <div id="heat-bar-wrap"><div id="heat-bar"></div></div>
+
+    <!-- 节拍指示器 -->
+    <div id="beat-indicator"></div>
+
+    <!-- Offset 显示 -->
+    <div id="offset-display">Offset: 0ms</div>
+
+    <!-- Debug 叠加层 -->
+    <div id="debug-overlay"></div>
+  </div>
+
+</body>
+</html>

@@ -1,0 +1,16 @@
+[
+  {
+    "id": "anlnwalker",
+    "title": "anlnwalker",
+    "file": "/studio/anlnwalker.mp3",
+    "bpm": 120,
+    "offset": 0
+  },
+  {
+    "id": "umbrella",
+    "title": "umbrella",
+    "file": "/studio/umbrella.mp3",
+    "bpm": 120,
+    "offset": 0
+  }
+]

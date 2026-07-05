@@ -1,0 +1,8 @@
+{
+  "songId": "test_song",
+  "bpm": 120,
+  "offset": 0,
+  "spawnLeadTime": 0.9,
+  "autoGenerate": true,
+  "targets": []
+}
