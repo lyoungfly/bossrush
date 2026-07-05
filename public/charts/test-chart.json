@@ -1,0 +1,39 @@
+{
+  "songId": "test_song",
+  "bpm": 120,
+  "offset": 0,
+  "spawnLeadTime": 1.0,
+  "targets": [
+    { "time": 2.0,  "type": "downbeat", "position": [ 0.0, 1.6, -10.0] },
+    { "time": 2.5,  "type": "normal",   "position": [-2.0, 2.2,  -9.0] },
+    { "time": 3.0,  "type": "normal",   "position": [ 2.0, 1.2, -11.0] },
+    { "time": 3.5,  "type": "normal",   "position": [-1.5, 2.8,  -8.0] },
+
+    { "time": 4.0,  "type": "downbeat", "position": [ 0.0, 1.6,  -9.0] },
+    { "time": 4.5,  "type": "normal",   "position": [ 2.5, 2.5, -10.0] },
+    { "time": 5.0,  "type": "normal",   "position": [-2.5, 1.0, -12.0] },
+    { "time": 5.5,  "type": "normal",   "position": [ 1.0, 2.0,  -8.5] },
+
+    { "time": 6.0,  "type": "downbeat", "position": [ 0.0, 1.6, -10.0] },
+    { "time": 6.5,  "type": "normal",   "position": [-3.0, 2.2,  -9.5] },
+    { "time": 7.0,  "type": "normal",   "position": [ 3.0, 1.4, -11.0] },
+    { "time": 7.5,  "type": "charge",   "position": [ 0.0, 1.6,  -9.0] },
+
+    { "time": 8.0,  "type": "downbeat", "position": [ 0.0, 1.6, -10.0] },
+    { "time": 8.5,  "type": "normal",   "position": [-1.0, 2.8,  -8.0] },
+    { "time": 9.0,  "type": "normal",   "position": [ 2.0, 1.8, -10.5] },
+    { "time": 9.5,  "type": "normal",   "position": [-2.0, 1.0, -12.0] },
+
+    { "time": 10.0, "type": "downbeat", "position": [ 0.0, 1.6,  -9.0] },
+    { "time": 10.5, "type": "normal",   "position": [ 2.5, 2.0, -11.0] },
+    { "time": 11.0, "type": "normal",   "position": [-2.5, 2.5,  -8.5] },
+    { "time": 11.5, "type": "charge",   "position": [ 1.5, 1.6, -10.0] },
+
+    { "time": 12.0, "type": "downbeat", "position": [ 0.0, 1.6, -10.0] },
+    { "time": 12.5, "type": "normal",   "position": [-3.0, 1.2,  -9.0] },
+    { "time": 13.0, "type": "normal",   "position": [ 3.0, 2.8, -11.5] },
+    { "time": 13.5, "type": "normal",   "position": [ 0.0, 2.0,  -8.0] },
+
+    { "time": 14.0, "type": "downbeat", "position": [ 0.0, 1.6,  -9.0] }
+  ]
+}
